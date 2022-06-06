@@ -14,6 +14,8 @@ import statsmodels.api as sm
 from sklearn.preprocessing import StandardScaler
 from statsmodels.formula.api import glm
 from shgo import*
+
+
 def my_general_linear_model_func(A1,b1):
     num_x = np.shape(A1)[1]
     def my_func(x):
@@ -35,7 +37,8 @@ def my_general_linear_model_func(A1,b1):
                 constraints=cons)
     
     return res1
-df=pd.read_csv("D:/python代码/forlos.csv")
+
+df=pd.read_csv(r"C:\Users\xfugm\Desktop\ICBC_基金研究\juchao.csv")
 rolling_days=20
 intercept=False
 df.index = df.iloc[:, 0]  # 将日期变为索引
@@ -45,13 +48,15 @@ df = df.astype(float)  # 将数据框object格式转换为float
 # dateTransfer = np.vectorize(self._dateTransfer)   # 向量化日期转换函数                
 # df.index = dateTransfer(df.index) # 转换索引日期格式          
 df.index = pd.DatetimeIndex(df.index)
-date_begin='2019-1-2'
+date_begin='2019-1-3'
 date_end='2022-5-13'
 x = {}
 r2 = {}
 coef = {}
 df = df.loc[(df.index>=date_begin) & (df.index<=date_end), :]   # 按照参数给定起始、截止时间选择数据
 df = df.sort_index(ascending=True)  # 按日期升序排序
+
+
 for i in range(df.shape[0] - rolling_days):
             date = df.index[i+rolling_days]   
             data = df.iloc[i:i+rolling_days, :]
