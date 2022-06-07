@@ -34,7 +34,7 @@ juchao_index_pd = db_to_pandas(url1, db_name, collection_name)
 rolling_days=30
 intercept=False
 
-date_begin='2019-1-3'
+date_begin='2020-1-3'
 date_end='2022-6-6'
 
 x = {}
@@ -49,11 +49,12 @@ fund_to_regr = fund_to_regr.loc[(fund_to_regr.index>=date_begin) & (fund_to_regr
 juchao_index_pd = juchao_index_pd.loc[(juchao_index_pd.index>=date_begin) & (juchao_index_pd.index<=date_end), :]
 
 
-fund_to_regr[fund_to_regr.isnull()] = 0 
-juchao_index_pd[juchao_index_pd.isnull()] = 0 
+# fund_to_regr[fund_to_regr.isnull()] = 0 
+# juchao_index_pd[juchao_index_pd.isnull()] = 0 
+
 
 fund_list = list(fund_to_regr.columns)
-
+fund_list = ['000390.OF']
 r = {}    
 for fund in fund_list:
 
@@ -62,15 +63,16 @@ for fund in fund_list:
     r[fund] = r2
 
 
-regress_info = ['xiaopanjiazhi','xiaopanchengzhang','dapanjiazhi','dapanchengzhang','zhongpanjiazhi','zhongpanchengzhang']
+regress_info = ['xiaopanjiazhi','xiaopanchengzhang','dapanjiazhi','dapanchengzhang']
 
 date_key = list(r[fund])
 r_test = {}
 for fund in fund_list:
-    r = r[fund]
+    r_temp = r[fund]
     for i in date_key:
-        r_test[i] = r[i][0]
+        r_test[i] = r_temp[i][0]
     r_test_pd = pd.DataFrame(r_test.values(),columns = regress_info,index = r_test.keys())
+    # r_test_pd = pd.DataFrame.from_dict(r_test,orient='index')
     url = r"C:\Users\xfugm\Desktop\ICBC_基金研究\回归数据\\" + fund + '.csv' 
     r_test_pd.to_csv(url)
 
