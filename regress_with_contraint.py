@@ -41,7 +41,7 @@ def my_general_linear_model_func(A1,b1):
 def rolling_regress(fund, fund_data, index_data, rolling_days):
     r2 = {}
     coef = {}
-    df = pd.concat([fund_data[fund]*100,index_data],axis=1)
+    df = pd.concat([fund_data[fund],index_data],axis=1)
     df.index = pd.DatetimeIndex(fund_data.index)
     df = df.drop('_id',axis=1)
     df = df.drop('日期',axis=1)
